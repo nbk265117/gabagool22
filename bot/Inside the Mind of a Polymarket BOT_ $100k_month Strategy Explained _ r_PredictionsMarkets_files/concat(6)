@@ -1,0 +1,128 @@
+SML.di("./CYrPuvCiTj.js",import.meta.url,"CYrPuvCiTj");SML.di("./DdQ8ToexAC.js",import.meta.url,"DdQ8ToexAC");
+SML.dm("Bto96eTLPT",["CYrPuvCiTj","DdQ8ToexAC"],(async(e,t)=>{const a=e.s;let i=class extends a{constructor(){super(...arguments),this.noteId="",this.noteContent="",this.userId="",this.subredditId="",this.recordedFeedback=null,this.provideFeedback=t=>()=>{e.k(this,e.c({source:"moderator",action:"click",noun:t},{modnote:{id:this.noteId,content:this.noteContent},subreddit:{id:this.subredditId},target_user:{id:this.userId}}));try{e.a6.isAvailable()&&e.a6.setItem(`${e.a7.ModUserSummaryFeedback}-${this.noteId}`,t)}catch(e){window.Sentry?.captureError?.(e)}const a=this.shadowRoot?.querySelector("span");a&&(a.innerText="Thanks for your feedback"),(this.shadowRoot?.querySelectorAll("button")??[]).forEach((e=>e.classList.add("hidden")))}}connectedCallback(){super.connectedCallback();try{e.a6.isAvailable()&&(this.recordedFeedback=e.a6.getItem(`${e.a7.ModUserSummaryFeedback}-${this.noteId}`))}catch(e){window.Sentry?.captureError?.(e)}}render(){return e.x`<div class="${this.recordedFeedback?"hidden":"flex"} items-center gap-2xs"> <span class="flex-1 text-14">${"Is this summary helpful?"}</span> ${e.u({appearance:"bordered",attributes:{slot:"trigger",onclick:this.provideFeedback("summary_is_helpful")},size:e.v.Small,leadingIcon:t.c({size:e.I.Small})})} ${e.u({appearance:"bordered",attributes:{slot:"trigger",onclick:this.provideFeedback("summary_is_not_helpful")},size:e.v.Small,leadingIcon:e.al({size:e.I.Small})})} </div>`;}};return i.styles=[e.t],e._([e.n({type:String,attribute:"note-id"})],i.prototype,"noteId",void 0),e._([e.n({type:String,attribute:"note-content"})],i.prototype,"noteContent",void 0),e._([e.n({type:String,attribute:"user-id"})],i.prototype,"userId",void 0),e._([e.n({type:String,attribute:"subreddit-id"})],i.prototype,"subredditId",void 0),e._([e.j()],i.prototype,"recordedFeedback",void 0),i=e._([e.e("mod-user-summary-feedback")],i),{get ModUserSummaryFeedback(){return i}}}));
+SML.di("./CYrPuvCiTj.js",import.meta.url,"CYrPuvCiTj");SML.di("./wzdls1o9Kk.js",import.meta.url,"wzdls1o9Kk");
+SML.dm("BuusMXXC0P",["CYrPuvCiTj","wzdls1o9Kk"],(async(e,t)=>{const i="hovercard",n="profile",s="community",r="other-user",a=e.x`,&nbsp;`,o="subreddit-name",u=".subreddit-name",c="subreddit-id";let h=class extends e.s{constructor(){super(...arguments),this.username="",this.source=n,this.achievements=[],this.unlockCount=0,this.totalTrophies=0,this.shouldRenderEntrypoint=!0,this.loading=!1,this.subredditId="",this.subredditName="",this.isModalFeatureActivated=!1,this.pubsub=new e.z(this),this._activateFeature=async t=>e.w(t)}getAchievements(e){const t=[],i=[],n=e.filter((e=>e&&e.trophies.edges.length));for(const e of n)for(const n of e.trophies.edges){const e=n?.node;e&&(e.unlockedAt?t.push(e):i.push(e))}return t.concat(i)}setTrophyCounts(e){this.unlockCount=0,this.totalTrophies=0;for(const t of e)this.unlockCount+=t.unlockedAt?1:0,this.totalTrophies++}extractAttributeData(e){const t=document.querySelectorAll(`[${e}]`);return 0===t.length?null:t[0].getAttribute(e)}extractClassData(e){const t=document.querySelectorAll(e);if(0===t.length)return null;const i=t[0];return i?i.innerText:null}addSubredditPrefix(e){return e?/^r\//.test(e)?e:`r/${e}`:null;}async getCommunityAchievementsData(){try{const t=await e.ag({operation:e.af.UserCommunityAchievements,variables:{username:this.username,subredditId:this.subredditId,imageMaxWidth:100}}),i=t.data?.redditorInfoByName;if("Redditor"!==i?.__typename||!i.trophyCase)return void(this.shouldRenderEntrypoint=!1);const n=[],s=i.trophyCase.trophiesBySubredditId||[];for(const e of s)"AchievementImageTrophy"!==e.__typename&&"AchievementRepeatableImageTrophy"!==e.__typename||n.push(e);this.achievements=n,this.unlockCount=i.trophyCase.trophiesBySubredditId?.length||0,this.totalTrophies=i.trophyCase.trophiesBySubredditId?.length||0}catch(e){window.Sentry?.captureError?.(e)}}async getAllAchievementsData(){try{if(!this.username)return void(this.achievements=[]);const t=await e.ag({operation:e.af.TrophyCategories,variables:{trophyImageMaxWidth:100,name:this.username,includeRepeatableAchievements:!0}}),i=t.data?.redditorInfoByName;if("Redditor"!==i?.__typename)return;const n=i.trophyCase?.categories?.edges.map((e=>e?.node));if(!n)return;const s=[];for(const e of n)e&&"AchievementTrophyCategory"===e.__typename&&s.push(e);if(!s.length)return;this.achievements=this.getAchievements(s),this.setTrophyCounts(this.achievements)}catch(e){window.Sentry?.captureError?.(e)}}async connectedCallback(){super.connectedCallback(),this.subredditId=this.extractAttributeData(c)||"",this.subredditName=this.addSubredditPrefix(this.extractAttributeData(o)||this.extractClassData(u))||"";const e=this.source===i||this.source===s,t=this.subredditId&&this.subredditName;!e||t?(this.loading=!0,this.subredditId&&e?await this.getCommunityAchievementsData():await this.getAllAchievementsData(),this.loading=!1):this.shouldRenderEntrypoint=!1}joinTemplates(t,i=e.x`, `,n=!1){let s=e.x``;for(let r=0;r<t.length;r++){const a=r===t.length-1&&!n?e.A:i;s=e.x`${s}${t[r](a)}`}return s}async handleAchievementClick(i,n,s=!1){const r=!!document.querySelector("achievement-modal");this.isModalFeatureActivated||r||(await this._activateFeature({name:e.gO}),this.isModalFeatureActivated=!0),this.pubsub.publish(e.T.AchievementsModalShowById,{achievementId:i,username:n,isCurrentLoggedUser:s});const a=this.getPageTypeFromSource();e.k(this,t.bV(a))}renderAchievementTitles(t){return e.x`
+      ${this.joinTemplates(this.getImageTrophies(t.achievements).slice(0,t.numOfAchievements).map((t=>i=>e.x`<div
+                data-testid="achievement-entrypoint-title"
+                class="text-12 font-normal text-neutral-content no-underline cursor-pointer"
+                @click="${()=>{this.handleAchievementClick(t.id,this.username,this.source===n)}}"
+                @keydown="${e=>{" "!==e.key&&"Enter"!==e.key||this.handleAchievementClick(t.id,this.username,this.source===n)}}"
+              >
+                <span class="achievement-flair-title">${t.name}${i}</span>
+              </div>`)),e.x`${t.separator}`,t.numOfUnlockedAchievements>3)}
+    `}renderMoreLink(t){return e.x`
+      <div
+        class="text-12 font-normal text-neutral-content no-underline cursor-pointer"
+        @click="${()=>this.handleViewLinkClick(`/user/${t.username}/achievements/`,!0)}"
+        @keydown="${e=>{" "!==e.key&&"Enter"!==e.key||this.handleViewLinkClick(`/user/${t.username}/achievements/`,!0)}}"
+        data-testid="more-achievements"
+      >
+        <span class="achievement-flair-title"
+          >${`+${t.numOfUnlockedAchievements-t.numOfAchievements} more`}</span
+        >
+      </div>
+    `;}renderTitlesSection(t){if(!t.numOfUnlockedAchievements)return e.x`<div
+        class="flex flex-row flex-wrap items-center text-12 font-normal text-neutral-content"
+      >
+        ${"None unlocked"}
+      </div>`;const i=this.renderAchievementTitles(t);let n;return n=t.numOfUnlockedAchievements>3?e.x`${i}${this.renderMoreLink(t)}`:e.x`${i}`,e.x`<div class="flex flex-row flex-wrap items-center" style="line-height: 1rem;">
+      ${n}
+    </div>`}getImageTrophies(e){const t=[];for(const i of e)"AchievementImageTrophy"!==i.__typename&&"AchievementRepeatableImageTrophy"!==i.__typename||t.push(i);return t}renderImagesSection(t){const i=this.getImageTrophies(t.achievements).slice(0,3).map(((e,t)=>this.renderImage({name:e.name,imageUrl:e.gridImage.url,id:e.id,username:this.username,index:t,isUnlocked:!0}))),s=i.length,r=this.source===n;if(s<3&&r){const e=3-s;for(let t=0;t<e;t++)i.push(this.renderImage({name:"",imageUrl:"https://preview.redd.it/l3ct2kzdo12d1.png?width=500&height=500&crop=smart&auto=webp&s=201ce96e4984d919ccb4e0483cbf6d3140b3a5c0",id:"",username:this.username,index:t+s,isUnlocked:!1}))}return e.x`<div
+      class="flex flex-row ${i.length<2?"me-sm":""} z-0"
+      style="max-width: 100px;"
+    >
+      ${i}
+    </div>`}renderImage(t){const i="rtl"===getComputedStyle(this).direction;let s="";t.index>0&&(s=`transform: translateX(${i?"":"-"}${40*t.index}%);`);const r=-2*t.index;return e.x`
+      <div
+        @click="${e=>{t.isUnlocked?this.handleAchievementClick(t.id,this.username,this.source===n):e.preventDefault()}}"
+        @keydown="${e=>{" "!==e.key&&"Enter"!==e.key||this.handleAchievementClick(t.id,this.username,this.source===n)}}"
+        class="${t.isUnlocked?"cursor-pointer":""}"
+        data-testid="achievement-entrypoint-image-container"
+        style="${s}; z-index: ${r};"
+      >
+        <div
+          style="position: relative; width: ${40}px;
+          height: ${40}px; z-index: ${r};"
+          class="achievement-flair"
+        >
+          <img
+            class="absolute top-0 bottom-0 start-0 end-0"
+            alt="${t.name}"
+            style="z-index: ${r};"
+            src="${t.imageUrl}"
+            width="${40}"
+            height="${40}"
+          />
+
+          <div class="absolute top-0 bottom-0 start-0 end-0" style="z-index: ${r-1};">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="20" fill="var(--color-neutral-background)" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    `}getPageTypeFromSource(){return this.isInHovercard()?e.ar.UserHovercard:this.isInProfile()||this.isInOtherUserProfile()?e.ar.Profile:this.isInCommunity()?e.ar.Community:e.ar.Unknown}getWindow(){return window}publishViewAllAchievementsTracking(){const i=this.getPageTypeFromSource();e.k(this,t.bW(i))}handleViewLinkClick(e="/achievements",t=!1){this.publishViewAllAchievementsTracking(),t?this.getWindow().open(e,"_blank"):this.getWindow().location.href=e}handleViewLinkKeyDown(e,t){" "!==e.key&&"Enter"!==e.key||(this.publishViewAllAchievementsTracking(),t.location.href="/achievements")}getViewAllHref(){return this.isInCommunity()?`/user/${this.username}/achievements/category/community/`:`/user/${this.username}/achievements`}renderActionBar(){return this.isInProfile()||this.isInCommunity()?e.x`
+        <div
+          class="flex flex-row 
+            justify-between w-full mt-xs ${this.isInProfile()?"mb-sm":""} items-center"
+        >
+          <div class="flex flex-col text-12 font-normal text-neutral-content-weak items-center">
+            ${this.isInCommunity()&&!this.unlockCount?e.A:`${this.unlockCount} unlocked`}
+          </div>
+          ${e.u({appearance:"secondary",attributes:{className:"pointer-events-auto hover:underline",onclick:()=>this.handleViewLinkClick(this.getViewAllHref(),!0),"data-testid":"achievements-view-link","aria-label":"View All Achievements"},children:"View All",size:e.v.Small})}
+        </div>
+      `:e.x`
+      <div
+        tabindex="0"
+        data-testid="achievements-view-link"
+        class="flex flex-row 
+          justify-between w-full mt-xs mb-md items-center"
+        @click="${()=>this.handleViewLinkClick()}"
+        @keydown="${e=>this.handleViewLinkKeyDown(e,window)}"
+      >
+        <span class="text-12 a no-visited hover:underline cursor-pointer">
+          ${"View your achievements"}
+        </span>
+      </div>
+    `;}isInHovercard(){return this.source===i}isInCommunity(){return this.source===s}isInProfile(){return this.source===n}isInOtherUserProfile(){return this.source===r}getTitle(){let t="";return t=this.isInCommunity()?"community achievements":this.isInHovercard()?`${this.subredditName} achievements`:"achievements",e.x`
+      <div
+        class="achievements-entrypoint-title
+            flex flex-row w-full items-start mb-xs ${this.isInHovercard()?"":"uppercase"}
+            text-12 font-semibold ${this.isInHovercard()?"text-neutral-content":"text-neutral-content-weak"}"
+      >
+        ${t}
+      </div>
+    `;}renderEntrypoint(){if(!this.shouldRenderEntrypoint||this.loading)return e.A;if(!this.unlockCount)return e.A;const t={achievements:this.achievements,username:this.username,numOfAchievements:this.unlockCount<3?this.unlockCount:3,numOfUnlockedAchievements:this.unlockCount,separator:a};return e.x`
+      <hr class="border-0 border-b-sm border-solid border-neutral-border-weak w-full" />
+      ${this.getTitle()}
+      <faceplate-tracker
+        source="achievements"
+        action="view"
+        noun="right_rail"
+        class="achievements-entrypoint flex flex-col w-full items-center"
+      >
+        <div class="achievement-profile-flairs flex flex-row w-full">
+          ${this.renderImagesSection(t)}
+          ${this.username?this.renderTitlesSection(t):e.A}
+        </div>
+        ${this.renderActionBar()}
+      </faceplate-tracker>
+      ${this.isInHovercard()?e.x`<hr class="border-0 border-b-sm border-solid border-neutral-border-weak w-full" />`:e.A}
+    `}render(){return this.isInCommunity()?e.x`<div class="flex flex-col w-full px-md box-border">
+        ${this.renderEntrypoint()}
+      </div>`:this.renderEntrypoint()}};return h.styles=[e.i`
+      .achievement-flair:hover {
+        transform: translateY(-10%);
+        transition: all 0.5s ease;
+      }
+      .achievement-flair-title:hover {
+        text-decoration: underline;
+      }
+      .achievement-profile-entrypoint {
+        pointer-events: auto !important;
+      }
+    `,e.t],e._([e.n({type:String,attribute:"username"})],h.prototype,"username",void 0),e._([e.n({type:String,attribute:"source"})],h.prototype,"source",void 0),e._([e.j()],h.prototype,"achievements",void 0),e._([e.j()],h.prototype,"unlockCount",void 0),e._([e.j()],h.prototype,"totalTrophies",void 0),e._([e.j()],h.prototype,"shouldRenderEntrypoint",void 0),e._([e.j()],h.prototype,"loading",void 0),e._([e.j()],h.prototype,"subredditId",void 0),e._([e.j()],h.prototype,"subredditName",void 0),e._([e.j()],h.prototype,"isModalFeatureActivated",void 0),h=e._([e.e("achievements-entrypoint")],h),{get AchievementsEntrypoint(){return h}}}));
+SML.di("./CYrPuvCiTj.js",import.meta.url,"CYrPuvCiTj");SML.di("./DkD-vRwh_p.js",import.meta.url,"DkD-vRwh_p");SML.di("./DENs6JDSt6.js",import.meta.url,"DENs6JDSt6");SML.di("./ylwuRpyq-M.js",import.meta.url,"ylwuRpyq-M");SML.di("./8u4pwgV_bC.js",import.meta.url,"8u4pwgV_bC");
+SML.dm("C2-PODlphO",["CYrPuvCiTj","DkD-vRwh_p","DENs6JDSt6","ylwuRpyq-M","8u4pwgV_bC"],(async(e,t,r,o)=>{let s=class extends e.s{constructor(){super(...arguments),this.country="",this.cookieDomain="",this.pubsub=new e.z(this),this.hasThemeCookieBeenSetByUser=!1}async connectedCallback(){super.connectedCallback(),this.pubsub.subscribe(e.T.ThemeCookieSetByUser,(()=>{this.hasThemeCookieBeenSetByUser=!0})),this.syncCookieToUserPreference()}async syncCookieToUserPreference(){try{const{data:s}=await e.ag({operation:e.af.IdentityUserPreferences,variables:{includeNightMode:!0}});if(this.hasThemeCookieBeenSetByUser)return;const i=s.identity?.preferences?.isNightModeEnabled;if(null==i)return;const n=o.b(),a=n===r.D.Darkmode;if(null!=n&&i===a)return;t.u({displayTheme:i?r.D.Darkmode:r.D.Lightmode}),o.s(this.country,this.cookieDomain,i),this.reportMismatch(),this.pubsub.publish(e.T.ThemeCookieSyncedFromUserPreference)}catch{}}reportMismatch(){const t=e.as(this.country)&&!e.at(),r={cookies_enabled:navigator.cookieEnabled&&!t?"true":"false"};this.w3Report(r)}w3Report(t){e.au({type:e.av.Counter,name:"shreddit_darkmode_preference_mismatches",value:1,labels:t})}render(){return e.x`<community-colors></community-colors>`}};return e._([e.n({type:String})],s.prototype,"country",void 0),e._([e.n({type:String,attribute:"cookie-domain"})],s.prototype,"cookieDomain",void 0),s=e._([e.e("shreddit-darkmode-syncer")],s),{get ShredditDarkmodeSyncer(){return s}}}));
+SML.di("./CYrPuvCiTj.js",import.meta.url,"CYrPuvCiTj");SML.di("./rxXg4kAY8P.js",import.meta.url,"rxXg4kAY8P");SML.di("./Q1SsBT7kMe.js",import.meta.url,"Q1SsBT7kMe");SML.di("./BXJPp76cO9.js",import.meta.url,"BXJPp76cO9");SML.di("./B58tzg41t5.js",import.meta.url,"B58tzg41t5");SML.di("./BJdHdrH8mb.js",import.meta.url,"BJdHdrH8mb");SML.di("./DcxJbk2B3f.js",import.meta.url,"DcxJbk2B3f");SML.di("./wzdls1o9Kk.js",import.meta.url,"wzdls1o9Kk");
+SML.dm("DhIxnhsJO5",["CYrPuvCiTj","rxXg4kAY8P","Q1SsBT7kMe","BXJPp76cO9","B58tzg41t5","BJdHdrH8mb","DcxJbk2B3f","wzdls1o9Kk"],(async(e,t,r,n)=>{let i=class extends e.s{constructor(){super(...arguments),this.noteId="",this.userId="",this.subredditId="",this.renderDropdownMenu=()=>e.x`<faceplate-dropdown-menu> ${this.renderOverflowMenuButton()} <faceplate-menu slot="menu" class="whitespace-nowrap max-h-[18rem] overflow-y-auto"><slot></slot> ${t.l({attributes:{role:"menuitem"},label:"Delete",leadingIcon:r.d(),onClick:this.onDeleteNote})} </faceplate-menu> </faceplate-dropdown-menu>`,this.closeMenu=()=>{this.dropdownMenu?.close()},this.onDeleteNote=async()=>{const{data:t}=await e.ag({operation:e.af.DeleteModUserNote,variables:{input:{noteId:this.noteId,noteType:e.gP.Note,userId:this.userId,subredditId:this.subredditId}}});t.deleteModUserNote?.ok&&(this.removeNoteFromTheDom(),e.p(e.T.ModNotesDeleted))},this.removeNoteFromTheDom=()=>{const e=document.getElementById(this.noteId);e&&e.parentNode?.removeChild(e)}}renderOverflowMenuButton(){return e.x`${e.u({appearance:"plain",attributes:{"aria-label":"Open user actions"},leadingIcon:n.o({size:e.I.Small}),size:e.v.Small})}`;}render(){return this.renderDropdownMenu()}};return i.styles=[e.t],e._([e.n({type:String,attribute:"note-id"})],i.prototype,"noteId",void 0),e._([e.n({type:String,attribute:"user-id"})],i.prototype,"userId",void 0),e._([e.n({type:String,attribute:"subreddit-id"})],i.prototype,"subredditId",void 0),e._([e.Y("faceplate-dropdown-menu")],i.prototype,"dropdownMenu",void 0),i=e._([e.e("mod-note-overflow-menu")],i),{get ModNoteOverflowMenu(){return i}}}));
